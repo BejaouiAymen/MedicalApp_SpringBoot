@@ -9,12 +9,12 @@ cloud:
     gateway:
       routes:
         - id: ADMIN-SERVICE
-          uri: lb://ADMIN-SERVICE
+          uri: http://localhost:9001/
           predicates:
             - Path=/user/**
         
         - id: LOGIN-SERVICE
-          uri: lb://LOGIN-SERVICE
+          uri: http://localhost:9002/
           predicates:
             - Path=/login/**
          
