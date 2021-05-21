@@ -1,7 +1,6 @@
 package com.userservice.user.Login;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -12,13 +11,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors();
 		http.csrf().disable();
-		  http.authorizeRequests().antMatchers("/**").fullyAuthenticated().and
-		 ().httpBasic(); 
+		//  http.authorizeRequests().antMatchers("/**").fullyAuthenticated().and
+		// ().httpBasic(); 
 	}
 
-	@Override
+	/*@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("pfa@gmail.com").password("{noop}pfapfa").roles("USER");
-	}
+	}*/
 
 }
