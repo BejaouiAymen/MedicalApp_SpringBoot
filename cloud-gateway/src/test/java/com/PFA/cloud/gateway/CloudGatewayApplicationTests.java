@@ -1,10 +1,10 @@
-package com.PFA.could.gateway;
+package com.PFA.cloud.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CouldGatewayApplicationTests {
+class CloudGatewayApplicationTests {
 
 	@Test
 	void contextLoads() {

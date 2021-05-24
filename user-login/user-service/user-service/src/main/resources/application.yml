@@ -12,3 +12,5 @@ eureka:
     instance:
         hostname: localhost
        
+jwt:
+  secret: test_secret_key

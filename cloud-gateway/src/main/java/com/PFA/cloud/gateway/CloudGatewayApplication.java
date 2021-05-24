@@ -1,27 +1,22 @@
-package com.pfa.user;
+package com.PFA.cloud.gateway;
+
+import java.util.Arrays;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import java.io.File;
-import java.util.Arrays;
-
-import com.pfa.user.resource.UserResource;
-
-
 @SpringBootApplication
-//@ComponentScan({"UserResource"})
-public class UserServiceApplication {
+@EnableEurekaClient
+
+public class CloudGatewayApplication {
 
 	public static void main(String[] args) {
-//		new File(UserResource.uploadDir).mkdir();
-		SpringApplication.run(UserServiceApplication.class, args);
+		SpringApplication.run(CloudGatewayApplication.class, args);
 	}
-
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -37,6 +32,4 @@ public class UserServiceApplication {
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
-
-
 }
