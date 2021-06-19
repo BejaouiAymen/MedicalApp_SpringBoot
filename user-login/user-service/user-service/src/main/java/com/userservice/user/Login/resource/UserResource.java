@@ -1,11 +1,14 @@
 package com.userservice.user.Login.resource;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import com.userservice.user.Login.exception.UserNotFoundException;
 import com.userservice.user.Login.model.User;
 import com.userservice.user.Login.service.UserService;
 import com.userservice.user.Login.utility.JWTUtility;
@@ -57,7 +61,7 @@ public class UserResource {
         }  
     }
     
-     @PostMapping("/add")   
+    @PostMapping("/auth")   
     public ResponseEntity<User> addUser(HttpServletResponse   response, @RequestBody User user) {
         User newUser = userService.findUserByEmail(user.getEmail());  
        
@@ -113,8 +117,38 @@ public class UserResource {
             
             return new ResponseEntity<>( HttpStatus.OK);
         }    
+      
+        @GetMapping("/all")
+        public ResponseEntity<List<User>> getAllUsers () {
+            List<User> users = userService.findAllUsers();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
     
+        @GetMapping("/find/{id}")
+        public ResponseEntity<User> getUserById (@PathVariable("id") Long id) {
+            User user = userService.findUserById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+    
+        @PostMapping("/add")
+        public ResponseEntity<User> addUser(@RequestBody User user ) {
+            user.setpassword((new BCryptPasswordEncoder().encode(user.getpassword())) );
+            User newUser = userService.addUser(user);
+            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        }
+    
+        @PutMapping("/update")
+        public ResponseEntity<User> updateUser(@RequestBody User user) {
+            User updateUser = userService.updateUser(user);
+            return new ResponseEntity<>(updateUser, HttpStatus.OK);
+        }
+    
+        @DeleteMapping("/delete/{id}")
+        public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+            userService.deleteUser(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
             
-        
+       
     
 }
